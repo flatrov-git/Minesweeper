@@ -1,6 +1,7 @@
 "use strict"
 
 let $ = document
+let root = $.getElementById("root") as HTMLDivElement
 
 let size: number = 10
 let levelGameOption: string = "easy"
@@ -10,6 +11,7 @@ let handlerLevelGameOption = $.getElementById("level-game") as HTMLSelectElement
 
 handlerLevelGameOption.addEventListener('change', (data: Event) => {
     levelGameOption = handlerLevelGameOption.value
+    showBoardGame()
 })
 
 function createMainBoardGame() {
@@ -80,4 +82,17 @@ function numberOfBombsPerHouse(i: number, j: number, mainBoardGame: boolean[][])
         return " ";
 }
 
-console.log(createFrontBoardGame())
+function showBoardGame() {
+    root.innerText = ""
+
+    createFrontBoardGame().forEach(row => {
+        row.forEach(column => {
+            let divElem = $.createElement("div")
+            divElem.className = "square"
+            divElem.onclick = () => {divElem.innerHTML = column}
+            root.append(divElem)
+        })
+    })
+}
+
+showBoardGame()

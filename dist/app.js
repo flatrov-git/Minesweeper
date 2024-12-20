@@ -1,11 +1,13 @@
 "use strict";
 let $ = document;
+let root = $.getElementById("root");
 let size = 10;
 let levelGameOption = "easy";
 let numberOfBombs = 25;
 let handlerLevelGameOption = $.getElementById("level-game");
 handlerLevelGameOption.addEventListener('change', (data) => {
     levelGameOption = handlerLevelGameOption.value;
+    showBoardGame();
 });
 function createMainBoardGame() {
     switch (levelGameOption) {
@@ -62,4 +64,15 @@ function numberOfBombsPerHouse(i, j, mainBoardGame) {
     else
         return " ";
 }
-console.log(createFrontBoardGame());
+function showBoardGame() {
+    root.innerText = "";
+    createFrontBoardGame().forEach(row => {
+        row.forEach(column => {
+            let divElem = $.createElement("div");
+            divElem.className = "square";
+            divElem.onclick = () => { divElem.innerHTML = column; };
+            root.append(divElem);
+        });
+    });
+}
+showBoardGame();
