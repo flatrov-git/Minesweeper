@@ -8,10 +8,12 @@ let levelGameOption: string = "easy"
 let numberOfBombs: number = 25
 
 let handlerLevelGameOption = $.getElementById("level-game") as HTMLSelectElement
+let time = $.getElementById("time") as HTMLParagraphElement
+let timeInterval : number
 
-handlerLevelGameOption.addEventListener('change', (data: Event) => {
+handlerLevelGameOption.addEventListener('change', () => {
     levelGameOption = handlerLevelGameOption.value
-    showBoardGame()
+    startGame()
 })
 
 function createMainBoardGame() {
@@ -70,7 +72,7 @@ function numberOfBombsPerHouse(i: number, j: number, mainBoardGame: boolean[][])
             let nx = i + x
             let ny = j + y
 
-            if(nx >= 0 && ny >= 0 && nx < size && ny < size && mainBoardGame[nx][ny]){
+            if (nx >= 0 && ny >= 0 && nx < size && ny < size && mainBoardGame[nx][ny]) {
                 bombs++
             }
         }
@@ -89,10 +91,39 @@ function showBoardGame() {
         row.forEach(column => {
             let divElem = $.createElement("div")
             divElem.className = "square"
-            divElem.onclick = () => {divElem.innerHTML = column}
+            divElem.onclick = () => {
+                if (column != "#") {
+                    divElem.innerHTML = column
+                } else {
+                    alert("you lost!")
+                    startGame()
+                }
+            }
             root.append(divElem)
         })
     })
 }
 
-showBoardGame()
+function timeHandler() {
+    let timeCounter: number = 0
+    timeInterval = setInterval(() => {
+        time.innerText = ""
+        timeCounter++
+
+        if (timeCounter < 10)
+            time.innerText = "00" + String(timeCounter)
+        else if (timeCounter < 100)
+            time.innerText = "0" + String(timeCounter)
+        else
+            time.innerText = String(timeCounter)
+
+    }, 1000)
+}
+
+function startGame() {
+    clearInterval(timeInterval)
+    timeHandler()
+    showBoardGame()
+}
+
+startGame()

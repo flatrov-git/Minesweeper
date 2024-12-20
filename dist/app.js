@@ -5,9 +5,11 @@ let size = 10;
 let levelGameOption = "easy";
 let numberOfBombs = 25;
 let handlerLevelGameOption = $.getElementById("level-game");
-handlerLevelGameOption.addEventListener('change', (data) => {
+let time = $.getElementById("time");
+let timeInterval;
+handlerLevelGameOption.addEventListener('change', () => {
     levelGameOption = handlerLevelGameOption.value;
-    showBoardGame();
+    startGame();
 });
 function createMainBoardGame() {
     switch (levelGameOption) {
@@ -70,9 +72,35 @@ function showBoardGame() {
         row.forEach(column => {
             let divElem = $.createElement("div");
             divElem.className = "square";
-            divElem.onclick = () => { divElem.innerHTML = column; };
+            divElem.onclick = () => {
+                if (column != "#") {
+                    divElem.innerHTML = column;
+                }
+                else {
+                    alert("you lost!");
+                    startGame();
+                }
+            };
             root.append(divElem);
         });
     });
 }
-showBoardGame();
+function timeHandler() {
+    let timeCounter = 0;
+    timeInterval = setInterval(() => {
+        time.innerText = "";
+        timeCounter++;
+        if (timeCounter < 10)
+            time.innerText = "00" + String(timeCounter);
+        else if (timeCounter < 100)
+            time.innerText = "0" + String(timeCounter);
+        else
+            time.innerText = String(timeCounter);
+    }, 1000);
+}
+function startGame() {
+    clearInterval(timeInterval);
+    timeHandler();
+    showBoardGame();
+}
+startGame();

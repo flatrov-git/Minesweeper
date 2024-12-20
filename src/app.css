@@ -28,12 +28,21 @@ select {
 
 .level-game {
     padding-block: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .level-game > select {
     border: 1px solid #ccc;
     padding: 4px 9px;
     border-radius: 5px;
+}
+
+.level-game__time {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .board-game {
