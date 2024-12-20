@@ -18,7 +18,7 @@ function createMainBoardGame() {
             numberOfBombs = 35;
             break;
         case "hard":
-            numberOfBombs = 50;
+            numberOfBombs = 45;
             break;
         default:
             numberOfBombs = 10;
@@ -62,7 +62,7 @@ function numberOfBombsPerHouse(i, j, mainBoardGame) {
     if (bombs)
         return String(bombs);
     else
-        return " ";
+        return "-";
 }
 function showBoardGame() {
     root.innerText = "";
